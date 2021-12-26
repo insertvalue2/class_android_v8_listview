@@ -1,8 +1,12 @@
 package com.nomadlab.mylistview.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Food {
+// Serializable 은 쉽게 풀면 데이터들을 byte 화 시킨다는 뜻입니다.
+public class Food implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String thumbnail;
     private final String title;

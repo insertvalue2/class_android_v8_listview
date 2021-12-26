@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d("TAG", " selected Id : " + i);
                 Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                // 직렬화(Serialization)란?
+                // 네트워크를 통해 다른 곳으로 전송할 수 있는 형식이나 파일에 저장할 수 있는 형식으로 객체를 변환하는 것을 말한다.
+                // object 를 intent 로 전달하기 위해서는 직렬화 처리를 해야 한다.
+                intent.putExtra("serialObj", foods.get(i));
                 startActivity(intent);
             }
         });
