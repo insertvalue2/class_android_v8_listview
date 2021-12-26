@@ -1,20 +1,15 @@
 package com.nomadlab.mylistview.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nomadlab.mylistview.R;
 import com.nomadlab.mylistview.model.Food;
-import com.nomadlab.mylistview.model.FoodType;
 
 import java.util.ArrayList;
 
@@ -49,27 +44,65 @@ public class FoodListAdapter extends BaseAdapter {
     }
 
     // 레이아웃 파일과 데이터를 활용해서 각각 뷰를 그려준다.
+//    @Override
+//    public View getView(int i, View view, ViewGroup viewGroup) {
+//
+//
+//        Log.d("TAG", "getView i : " + i);
+//        // 그리고자 하는 아이템 하나(xml 이용)
+//        LayoutInflater inflater = LayoutInflater.from(context);
+//        View itemView = inflater.inflate(R.layout.item_food, null);
+//        ImageView imageView = itemView.findViewById(R.id.thumbnailImageView);
+//        TextView titleTextView = itemView.findViewById(R.id.titleTextView);
+//        TextView subTitleView = itemView.findViewById(R.id.subTitleTextView);
+//        TextView detailTextView = itemView.findViewById(R.id.detailTextView);
+//
+//        Food food = data.get(i);
+//
+//        Glide.with(context)
+//                .load(food.getThumbnail())
+//                .centerCrop()
+//                .into(imageView);
+//
+//        titleTextView.setText(food.getTitle());
+//        subTitleView.setText(food.getSubTitle());
+//        detailTextView.setText(food.getDetail());
+//
+//        return itemView;
+//    }
+
+    // 성능 개선 -> viewHolder 개념 추가
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.d("TAG", "getView i : " + i);
-        // 그리고자 하는 아이템 하나(xml 이용)
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View itemView = inflater.inflate(R.layout.item_food, null);
-        ImageView imageView = itemView.findViewById(R.id.thumbnailImageView);
-        TextView titleTextView = itemView.findViewById(R.id.titleTextView);
-        TextView subTitleView = itemView.findViewById(R.id.subTitleTextView);
-        TextView detailTextView = itemView.findViewById(R.id.detailTextView);
+
+        View itemView;
+        FoodListViewHolder viewHolder;
+        // view 가 한번도 만들어 지지 않았다면
+        if (view == null) {
+            viewHolder = new FoodListViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(context);
+            itemView = inflater.inflate(R.layout.item_food, null);
+            viewHolder.imageView = itemView.findViewById(R.id.thumbnailImageView);
+            viewHolder.titleTextView = itemView.findViewById(R.id.titleTextView);
+            viewHolder.subTitleView = itemView.findViewById(R.id.subTitleTextView);
+            viewHolder.detailTextView = itemView.findViewById(R.id.detailTextView);
+            // 중요 ~
+            // 찾을 수 있도록 태그를 달아 놓는다.
+            itemView.setTag(viewHolder);
+        } else {
+            viewHolder = (FoodListViewHolder) view.getTag();
+            itemView = view;
+        }
 
         Food food = data.get(i);
-
         Glide.with(context)
                 .load(food.getThumbnail())
                 .centerCrop()
-                .into(imageView);
+                .into(viewHolder.imageView);
 
-        titleTextView.setText(food.getTitle());
-        subTitleView.setText(food.getSubTitle());
-        detailTextView.setText(food.getDetail());
+        viewHolder.titleTextView.setText(food.getTitle());
+        viewHolder.subTitleView.setText(food.getSubTitle());
+        viewHolder.detailTextView.setText(food.getDetail());
 
         return itemView;
     }
