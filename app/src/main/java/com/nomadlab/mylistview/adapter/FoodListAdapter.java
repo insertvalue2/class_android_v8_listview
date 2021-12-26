@@ -1,17 +1,20 @@
 package com.nomadlab.mylistview.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nomadlab.mylistview.R;
 import com.nomadlab.mylistview.model.Food;
+import com.nomadlab.mylistview.model.FoodType;
 
 import java.util.ArrayList;
 
